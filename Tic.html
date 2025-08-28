@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Tic Tac Toe</title>
+<style>
+  body { font-family: monospace; background: #222; color: #eee; margin: 0; padding: 20px; }
+  #output { white-space: pre; border: 1px solid #444; padding: 10px; height: 300px; overflow-y: auto; background: #111; }
+  input { width: 100%; padding: 5px; margin-top: 10px; background: #333; color: #eee; border: none; }
+  button { padding: 5px; margin-top: 5px; cursor: pointer; background: #444; color: #eee; border: none; }
+</style>
+</head>
+<body>
+
+<h2>Tic Tac Toe</h2>
+<div id="output"></div>
+<input id="userInput" placeholder="Gib Position 1-9 ein" onkeydown="if(event.key==='Enter') handleInput()">
+
+<script>
+let board = [" "," "," "," "," "," "," "," "," "];
+let mensch = "X";
+let computer = "O";
+let aktuellerSpieler = mensch;
+
+function showBoard() {
+  let output = "";
+  output += ` ${board[0]} | ${board[1]} | ${board[2]} \n`;
+  output += "---|---|---\n";
+  output += ` ${board[3]} | ${board[4]} | ${board[5]} \n`;
+  output += "---|---|---\n";
+  output += ` ${board[6]} | ${board[7]} | ${board[8]} \n`;
+  document.getElementById("output").textContent = output;
+}
+
+function checkWinner(spieler) {
+  const winCombos = [
+    [0,1,2],[3,4,5],[6,7,8], // horizontal
+    [0,3,6],[1,4,7],[2,5,8], // vertikal
+    [0,4,8],[2,4,6]          // diagonal
+  ];
+  return winCombos.some(c => c.every(i => board[i]===spieler));
+}
+
+function boardFull() {
+  return board.every(c => c!==" ");
+}
+
+function computerMove() {
+  const free = board.map((v,i)=>v===" "?i:null).filter(v=>v!==null);
+  return free[Math.floor(Math.random()*free.length)];
+}
+
+function handleInput() {
+  if(aktuellerSpieler !== mensch) return;
+
+  let input = document.getElementById("userInput").value;
+  let pos = parseInt(input)-1;
+  document.getElementById("userInput").value = "";
+
+  if(isNaN(pos) || pos<0 || pos>8 || board[pos]!==" ") {
+    alert("Ungültige Eingabe");
+    return;
+  }
+
+  board[pos] = mensch;
+  showBoard();
+  if(checkWinner(mensch)) { alert("🏆 Du hast gewonnen!"); return; }
+  if(boardFull()) { alert("🤝 Unentschieden!"); return; }
+
+  aktuellerSpieler = computer;
+  let compPos = computerMove();
+  board[compPos] = computer;
+  showBoard();
+  if(checkWinner(computer)) { alert("💻 Computer hat gewonnen!"); return; }
+  if(boardFull()) { alert("🤝 Unentschieden!"); return; }
+
+  aktuellerSpieler = mensch;
+}
+
+showBoard();
+</script>
+
+</body>
+</html>

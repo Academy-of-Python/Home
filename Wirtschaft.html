@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Wirtschaft</title>
+  <style>
+    body { font-family: monospace; background: #111; color: #eee; padding: 20px; }
+    #output { white-space: pre-wrap; border: 1px solid #444; padding: 10px; height: 400px; overflow-y: auto; }
+    input { background: #222; color: #eee; border: none; padding: 5px; width: 300px; margin-top: 10px; }
+    h1 { font-size: 18px; }
+  </style>
+</head>
+<body>
+  <h1>Wirtschaftssimulation</h1>
+  <div id="output"></div>
+  <input id="userInput" placeholder="Eingabe hier" onkeydown="if(event.key==='Enter') handleInput()">
+
+  <script>
+    let geld = 100;
+    let inventar = 0;
+    let preis = 10;
+    let runde = 1;
+    let step = "aktion"; // aktueller Eingabezustand
+    let menge = 0;
+
+    function write(text) {
+      const output = document.getElementById('output');
+      output.textContent += text + '\n';
+      output.scrollTop = output.scrollHeight;
+    }
+
+    function handleInput() {
+      const input = document.getElementById('userInput');
+      const value = input.value.trim().toLowerCase();
+      input.value = '';
+
+      if (step === "aktion") {
+        if (value === "kaufen") {
+          write("Wie viele Stück willst du kaufen?");
+          step = "kaufen";
+        } else if (value === "verkaufen") {
+          write("Wie viele Stück willst du verkaufen?");
+          step = "verkaufen";
+        } else if (value === "beenden") {
+          write(`Spiel beendet. Du hast ${geld} Geld und ${inventar} Waren.`);
+          step = "ende";
+        } else {
+          write("Ungültige Aktion.");
+        }
+      }
+      else if (step === "kaufen") {
+        if (!isNaN(value) && value !== "") {
+          menge = parseInt(value);
+          const kosten = menge * preis;
+          if (kosten <= geld) {
+            geld -= kosten;
+            inventar += menge;
+            write(`Du hast ${menge} Stück gekauft.`);
+          } else {
+            write("Du hast nicht genug Geld.");
+          }
+          nächsteRunde();
+        } else {
+          write("Ungültige Eingabe.");
+        }
+      }
+      else if (step === "verkaufen") {
+        if (!isNaN(value) && value !== "") {
+          menge = parseInt(value);
+          if (menge <= inventar) {
+            geld += menge * preis;
+            inventar -= menge;
+            write(`Du hast ${menge} Stück verkauft.`);
+          } else {
+            write("Du hast nicht genug Waren.");
+          }
+          nächsteRunde();
+        } else {
+          write("Ungültige Eingabe.");
+        }
+      }
+    }
+
+    function nächsteRunde() {
+      // Preis zufällig ändern
+      preis += [-2,-1,0,1,2][Math.floor(Math.random()*5)];
+      if (preis < 1) preis = 1;
+      runde++;
+      write(`\nRunde ${runde}`);
+      write(`Geld: ${geld} | Waren im Inventar: ${inventar} | Warenpreis: ${preis} pro Stück`);
+      write("Was möchtest du tun? (kaufen, verkaufen, beenden):");
+      step = "aktion";
+    }
+
+    // Startausgabe
+    write("Willkommen zur Wirtschaftssimulation!");
+    write("Du startest mit 100 Geld und kannst Waren kaufen und verkaufen.");
+    write("Der Warenpreis ändert sich jede Runde.\n");
+    write(`Runde ${runde}`);
+    write(`Geld: ${geld} | Waren im Inventar: ${inventar} | Warenpreis: ${preis} pro Stück`);
+    write("Was möchtest du tun? (kaufen, verkaufen, beenden):");
+  </script>
+</body>
+</html>

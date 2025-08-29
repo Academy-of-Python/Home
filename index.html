@@ -15,7 +15,7 @@
     </a>
     <a href="index.html" class="site-name">Python Academy</a>
     <nav>
-      <a href="#home">Home</a>
+      <a href="ev.html">Home</a>
       <a href="Playground.html">Playground</a>
       <a href="#services">Leistungen</a>
       <a href="#contact">Kontakt</a>
@@ -27,5 +27,21 @@
   <h1>Willkommen auf meiner Website</h1>
   <p>Hier kannst du deinen Inhalt einfügen.</p>
 </main>
+
+<script>
+const link = document.querySelector('nav a[href="ev.html"]');
+const passwort = "geheim";
+
+link.addEventListener("click", function(event) {
+    event.preventDefault();
+    const eingabe = prompt("Bitte Passwort eingeben:");
+    if(eingabe === passwort) {
+        window.location.href = link.href;
+    } else {
+        alert("Falsches Passwort");
+    }
+});
+</script>
+
 </body>
 </html>

@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Playground - Python Academy</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    main {
+      text-align: center;
+      padding: 50px;
+    }
+    iframe {
+      border: none;
+      width: 100%;
+      height: 75vw;
+      max-height: 800px;
+      margin-top: 30px;
+    }
+    .button {
+      display: inline-block;
+      padding: 15px 30px;
+      background-color: #4CAF50;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+    .note {
+      margin-top: 15px;
+      font-size: 14px;
+      color: #888888;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="nav-container">
+    <a href="index.html" class="logo">
+      <img src="logo.png" alt="Logo">
+    </a>
+    <a href="index.html" class="site-name">Python Academy</a>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="Playground.html">Playground</a>
+      <a href="#services">Leistungen</a>
+      <a href="#contact">Kontakt</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <h1>ev.io auf meiner Website</h1>
+  <p>Versuche das Spiel direkt zu spielen:</p>
+  <iframe src="https://ev.io"></iframe>
+  <p class="note">Falls das Spiel hier nicht lädt, klicke auf den Button:</p>
+  <a class="button" href="https://ev.io" target="_blank">ev.io spielen</a>
+</main>
+
+<script>
+const link = document.querySelector('nav a[href="Playground.html"]');
+const passwort = "geheim";
+
+link.addEventListener("click", function(event) {
+    event.preventDefault();
+    const eingabe = prompt("Bitte Passwort eingeben:");
+    if(eingabe === passwort) {
+        window.location.href = link.href;
+    } else {
+        alert("Falsches Passwort");
+    }
+});
+</script>
+
+</body>
+</html>

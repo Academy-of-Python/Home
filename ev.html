@@ -58,20 +58,5 @@
   <a class="button" href="https://ev.io" target="_blank">ev.io spielen</a>
 </main>
 
-<script>
-const link = document.querySelector('nav a[href="Playground.html"]');
-const passwort = "geheim";
-
-link.addEventListener("click", function(event) {
-    event.preventDefault();
-    const eingabe = prompt("Bitte Passwort eingeben:");
-    if(eingabe === passwort) {
-        window.location.href = link.href;
-    } else {
-        alert("Falsches Passwort");
-    }
-});
-</script>
-
 </body>
 </html>

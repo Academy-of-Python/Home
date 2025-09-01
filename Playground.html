@@ -11,11 +11,17 @@
 <header>
   <div class="nav-container">
     <a href="index.html" class="logo">
-      <img src="logo.png" alt="Logo">
+      <img src="logo.png" alt="Logo" style="height:32px">
     </a>
     <a href="index.html" class="site-name">Python Academy</a>
     <nav>
-      <a href="ev.html">Home</a>
+      <div class="dropdown">
+        <a href="#" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">Home</a>
+        <div class="dropdown-menu" role="menu" aria-label="Home Unterseiten">
+          <a href="ev.html" data-protected="true" role="menuitem">Veranstaltungen</a>
+          <a href="Programm.html" data-protected="true" role="menuitem">Programm</a>
+        </div>
+      </div>
       <a href="Playground.html">Playground</a>
       <a href="#services">Leistungen</a>
       <a href="#contact">Kontakt</a>
